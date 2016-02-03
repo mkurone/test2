@@ -1,0 +1,23 @@
+language: php
+
+php:
+  - 5.5
+
+matrix:
+  allow_falures:
+    - php: 5.5
+
+before_script:
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install --dev --no-interaction
+  - pear install --alldeps phpdocumentor
+script:
+  - pear -V
+  - find . -type f -name "*.php" | xargs -n1 php -l
+  - git diff HEAD^
+  - mkdir -p build/logs
+  - phpunit --coverage-clover build/logs/clover.xml --configuration tests/phpunit.xml tests
+
+after_success:
+  - travis_retry php vendor/bin/coveralls -v
+
