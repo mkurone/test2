@@ -7,11 +7,11 @@
 
 class Fuga {
 
-    public function index() {
+    public function index(){
         return true;
     }
 
-    public function index2() {
+    public function index2(){
         return false;
     }
 }
